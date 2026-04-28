@@ -1,10 +1,10 @@
 class MyInfoJobLocators:
-# MI-081
+    # MI-081: Navigation
     MY_INFO = "text=My Info"
     JOB_TAB = "a.orangehrm-tabs-item:has-text('Job')"
     JOB_HEADER = "text=Job Title"
 
-# MI-082
+    # MI-082 to MI-088: Job Fields
     JOINED_DATE = "text=Joined Date"
     JOB_TITLE = "text=Job Title"
     JOB_CATEGORY = "text=Job Category"
@@ -12,10 +12,8 @@ class MyInfoJobLocators:
     LOCATION = "text=Location"
     EMPLOYMENT_STATUS = "text=Employment Status"   
 
-      # MI-082/ Contract section
-    # CONTRACT_TOGGLE = "//label[contains(text(),'Include Employment Contract Details')]/following::span[contains(@class,'oxd-switch-input')][1]"
-    CONTRACT_TOGGLE = "label:has-text('Include Employment Contract Details') >> xpath=following::span[1]"
-    # CONTRACT_START = "text=Contract Start Date"
+    # # MI-089: Contract section
+    # CONTRACT_TOGGLE = "//label[contains(text(),'Include Employment Contract Details')]/following::span[contains(@class,'oxd-switch-input')]"    CONTRACT_START = "text=Contract Start Date"
     # CONTRACT_END = "text=Contract End Date"
-    CONTRACT_START_INPUT = ".oxd-form-row:has(label:has-text('Contract Start Date')) input"
-    CONTRACT_END_INPUT   = ".oxd-form-row:has(label:has-text('Contract End Date')) input"
+    # CONTRACT_START_INPUT = ".oxd-form-row:has(label:has-text('Contract Start Date')) input"
+    # CONTRACT_END_INPUT   = ".oxd-form-row:has(label:has-text('Contract End Date')) input"
