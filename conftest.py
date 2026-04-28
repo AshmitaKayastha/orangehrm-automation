@@ -17,7 +17,7 @@ from Utils.common import CommonUtils
 try:
     from Pages.login_page import LoginPage
     from Locators.login_locators import LoginLocators
-    from Asserssion.assertions import LoginAssertions
+    from Assertions.assertions import LoginAssertions
 except ImportError as e:
     print(f"Import error: {e}")
     print("Make sure all required files are in place")
