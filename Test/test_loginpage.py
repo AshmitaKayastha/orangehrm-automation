@@ -7,7 +7,7 @@ from playwright.sync_api import Page
 from Pages.login_page import LoginPage
 from config import BASE_URL, USERNAME, PASSWORD
 from Utils.common import CommonUtils
-from Asserssion.assertions import LoginAssertions
+from Assertions.assertions import LoginAssertions
 
 
 class TestPositiveLoginScenarios:
