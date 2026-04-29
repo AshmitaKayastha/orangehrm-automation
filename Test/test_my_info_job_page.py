@@ -1,5 +1,7 @@
 from config import BASE_URL, USERNAME, PASSWORD
 from Pages.MyInfoJobPage import MyInfoJobPage
+from Locators.MyInfoQualificationsLocators import MyInfoQualificationsLocators as loc
+
 
 
 def test_MI_081_navigate_to_job_tab(page):
