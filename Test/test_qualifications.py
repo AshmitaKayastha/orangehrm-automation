@@ -107,3 +107,74 @@ def test_MI_110_delete_skill(setup):
     skill_to_delete = "Java"
     qual_page.delete_skill_record(skill_to_delete)
     expect(setup.get_by_text(skill_to_delete)).to_be_hidden(timeout=10000)
+
+# test_qualifications.py
+def test_MI_111_add_language(setup):
+    qual_page = QualificationsPage(setup)
+    qual_page.navigate_to_qualifications()
+    
+    # Ensure these strings match the text inside your OrangeHRM dropdowns exactly
+    qual_page.add_language("French", "Writing","Good", "Testing MI-111")
+    
+    expect(setup.locator(QualificationsLocators.SUCCESS_TOAST)).to_be_visible()
+
+# MI-112: Test Editing a Language
+# test_qualifications.py
+
+def test_MI_112_edit_language(setup):
+    qual_page = QualificationsPage(setup)
+    qual_page.navigate_to_qualifications()
+    qual_page.edit_language("English", "Poor")
+    
+    # Assert success
+    expect(setup.locator(QualificationsLocators.SUCCESS_TOAST)).to_be_visible()
+
+# MI-113: Test Deleting a Language
+def test_MI_113_delete_language(setup):
+    qual_page = QualificationsPage(setup)
+    qual_page.navigate_to_qualifications()
+    
+    target_lang = "French"
+    qual_page.delete_language(target_lang)
+    
+    expect(setup.locator(QualificationsLocators.SUCCESS_TOAST)).to_be_visible()
+    expect(setup.get_by_text(target_lang)).to_be_hidden()
+
+def test_MI_114_add_license(setup):
+    qual_page = QualificationsPage(setup)
+    qual_page.navigate_to_qualifications()
+    license_name = "Cisco Certified Network Professional (CCNP)"
+    license_no = "LIC-999"
+    qual_page.add_license(license_name, license_no, "2024-01-01", "2026-01-01")
+        
+    expect(setup.locator(QualificationsLocators.SUCCESS_TOAST)).to_be_visible()
+
+# MI-115: Edit License Number
+def test_MI_115_edit_license(setup):
+    qual_page = QualificationsPage(setup)
+    qual_page.navigate_to_qualifications()
+    
+    target_license = "Cisco Certified Network Professional (CCNP)"
+    new_num = "LIC-2026-999"
+    
+    qual_page.edit_license_number(target_license, new_num)
+    
+    # Assertions
+    expect(setup.locator(QualificationsLocators.SUCCESS_TOAST)).to_be_visible()
+    # Verify the specific row contains the new number
+    license_row = setup.locator(".oxd-table-card").filter(has_text=target_license)
+    expect(license_row).to_contain_text(new_num)
+
+# MI-116: Delete License
+def test_MI_116_delete_license(setup):
+    qual_page = QualificationsPage(setup)
+    qual_page.navigate_to_qualifications()
+    
+    license_to_remove = "Cisco Certified Network Professional (CCNP)"
+    
+    qual_page.delete_license(license_to_remove)
+    
+    # Assertions
+    expect(setup.locator(QualificationsLocators.SUCCESS_TOAST)).to_be_visible()
+    # Verify the text is no longer in the table
+    expect(setup.get_by_text(license_to_remove)).to_be_hidden()
