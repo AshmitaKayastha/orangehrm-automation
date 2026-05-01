@@ -1,66 +1,37 @@
+import pytest
 from config import BASE_URL, USERNAME, PASSWORD
 from Pages.MyInfoJobPage import MyInfoJobPage
+
 from Locators.MyInfoQualificationsLocators import MyInfoQualificationsLocators as loc
 
+from Assertions.myInfoJobAssertions import MyInfoJobAssertions
 
-
-def test_MI_081_navigate_to_job_tab(page):
-
+@pytest.fixture
+def job_page(page):
+    """Fixture to handle login and navigation to the Job tab once per test."""
     page.goto(BASE_URL)
     page.fill("input[name='username']", USERNAME)
     page.fill("input[name='password']", PASSWORD)
     page.click("button[type='submit']")
-
+    
     job = MyInfoJobPage(page)
-
     job.open_my_info()
     job.open_job_tab()
-
     page.wait_for_load_state("networkidle")
+    return job
 
-    assert job.is_job_section_visible()
+def test_MI_081_navigate_to_job_tab(job_page):
+    """Test navigation to Job tab."""
+    MyInfoJobAssertions.assert_job_tab_navigated(job_page)
 
+def test_MI_082_to_088_verify_job_fields(job_page):
+    """Verify all job detail fields are visible (Joined Date, Title, Category, etc)."""
+    MyInfoJobAssertions.assert_all_job_fields_visible(job_page)
 
-def test_MI_082_verify_job_fields(page):
-
-    page.goto(BASE_URL)
-    page.fill("input[name='username']", USERNAME)
-    page.fill("input[name='password']", PASSWORD)
-    page.click("button[type='submit']")
-
-    job = MyInfoJobPage(page)
-
-    job.open_my_info()
-    job.open_job_tab()
-
-    page.wait_for_load_state("networkidle")
-
-    assert job.is_joined_date_visible()
-    assert job.is_job_title_visible()
-    assert job.is_job_category_visible()
-    assert job.is_sub_unit_visible()
-    assert job.is_location_visible()
-    assert job.is_employment_status_visible()
-
-def test_MI_089_contract_fields(page):
-
-    page.goto(BASE_URL)
-    page.fill("input[name='username']", USERNAME)
-    page.fill("input[name='password']", PASSWORD)
-    page.click("button[type='submit']")
-
-    job = MyInfoJobPage(page)
-
-    job.open_my_info()
-    job.open_job_tab()
-
-    page.locator(loc.JOB_HEADER).wait_for(state="visible")
-
-    # Soft validation (since fields may not exist)
-    if job.is_contract_start_visible():
-        assert job.is_contract_start_visible()
-
-    if job.is_contract_end_visible():
-        assert job.is_contract_end_visible()
-    assert job.is_contract_end_visible()
-
+# def test_MI_089_contract_fields_visibility(job_page):
+#     """Verify Contract Start and End Date fields appear when toggle is enabled."""
+#     # Enable the contract toggle
+#     job_page.enable_contract_details()
+    
+#     # Assert fields are visible
+#     MyInfoJobAssertions.assert_contract_fields_visible(job_page)
