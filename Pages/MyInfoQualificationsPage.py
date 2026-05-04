@@ -8,6 +8,8 @@ class QualificationsPage:
     def navigate_to_qualifications(self):
         self.page.click(QualificationsLocators.QUALIFICATIONS_TAB)
 
+    # Work Experience
+
     def add_work_experience(self, company, job_title, from_date, to_date, comment):
         self.page.click(QualificationsLocators.ADD_WORK_EXP_BTN)
         self.page.fill(QualificationsLocators.COMPANY_INPUT, company)
@@ -19,12 +21,11 @@ class QualificationsPage:
         self.page.wait_for_timeout(2000) 
 
     def edit_first_record(self, new_company):
+        company_input = self.page.locator(QualificationsLocators.COMPANY_INPUT)
         self.page.locator(QualificationsLocators.EDIT_ICON).first.click()
-        self.page.locator(QualificationsLocators.COMPANY_INPUT).click(click_count=3)
-        self.page.keyboard.press("Backspace")
-        self.page.fill(QualificationsLocators.COMPANY_INPUT, new_company)
-        self.page.click(QualificationsLocators.SAVE_BTN)
-        self.page.wait_for_timeout(2000) 
+        company_input.fill(new_company)
+        self.page.locator(QualificationsLocators.SAVE_BTN).click()
+
     def delete_first_record(self):
         self.page.locator(QualificationsLocators.DELETE_ICON).first.click()
         self.page.click(QualificationsLocators.CONFIRM_DELETE_BTN)

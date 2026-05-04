@@ -106,7 +106,7 @@ def test_MI_111_add_language(setup):
 def test_MI_112_edit_language(setup):
     qual_page = QualificationsPage(setup)
     qual_page.navigate_to_qualifications()
-    qual_page.edit_language("English", "Poor")
+    qual_page.edit_language("French", "Poor")
     expect(setup.locator(QualificationsLocators.SUCCESS_TOAST)).to_be_visible()
 
 def test_MI_113_delete_language(setup):
