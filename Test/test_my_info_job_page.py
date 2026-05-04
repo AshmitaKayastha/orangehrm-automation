@@ -1,6 +1,9 @@
 import pytest
 from config import BASE_URL, USERNAME, PASSWORD
 from Pages.MyInfoJobPage import MyInfoJobPage
+
+from Locators.MyInfoQualificationsLocators import MyInfoQualificationsLocators as loc
+
 from Assertions.myInfoJobAssertions import MyInfoJobAssertions
 
 @pytest.fixture

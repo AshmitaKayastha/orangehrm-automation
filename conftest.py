@@ -23,24 +23,37 @@ except ImportError as e:
     print("Make sure all required files are in place")
     raise
 
+
 @pytest.fixture(scope="session")
 def browser_instance():
     """
     Create a browser instance for the test session
-
-    Yields:
-        Browser instance
     """
     playwright = sync_playwright().start()
 
+   
+    SLOW_MO = 1000 
+
     if BROWSER.lower() == "chromium":
-        browser = playwright.chromium.launch(headless=HEADLESS)
+        browser = playwright.chromium.launch(
+            headless=HEADLESS,
+            slow_mo=SLOW_MO
+        )
     elif BROWSER.lower() == "firefox":
-        browser = playwright.firefox.launch(headless=HEADLESS)
+        browser = playwright.firefox.launch(
+            headless=HEADLESS,
+            slow_mo=SLOW_MO
+        )
     elif BROWSER.lower() == "webkit":
-        browser = playwright.webkit.launch(headless=HEADLESS)
+        browser = playwright.webkit.launch(
+            headless=HEADLESS,
+            slow_mo=SLOW_MO
+        )
     else:
-        browser = playwright.chromium.launch(headless=HEADLESS)
+        browser = playwright.chromium.launch(
+            headless=HEADLESS,
+            slow_mo=SLOW_MO
+        )
 
     yield browser
     browser.close()
@@ -51,12 +64,6 @@ def browser_instance():
 def page(browser_instance) -> Page:
     """
     Create a new page for each test
-
-    Args:
-        browser_instance: Browser instance from session fixture
-
-    Yields:
-        Page object
     """
     page = browser_instance.new_page()
     page.set_viewport_size({"width": 1920, "height": 1080})
@@ -70,12 +77,6 @@ def page(browser_instance) -> Page:
 def setup_and_teardown(page):
     """
     Setup and teardown fixture for each test
-
-    Args:
-        page: Page object
-
-    Yields:
-        Page object
     """
     CommonUtils.log_message("Test setup started")
     yield page
